@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opening Survey123</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #0079c1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #005a87;
+        }
+        .secondary {
+            background-color: #6c757d;
+        }
+        .secondary:hover {
+            background-color: #545b62;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Open Survey123</h2>
+        <p>Choose how to open your survey:</p>
+        <button onclick="openDesktop()">Open in Desktop App</button>
+        <button onclick="openWeb()" class="secondary">Open in Web Browser</button>
+    </div>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const globalId = urlParams.get('globalId') || urlParams.get('globalid');
+        const objectId = urlParams.get('objectId') || urlParams.get('objectid');
+        const itemID = '14a1bb3121e843198dea07f408ef25e4';
+        
+        // Build URLs
+        let desktopURL = `arcgis-survey123://?itemID=${itemID}`;
+        let webURL = `https://survey123.arcgis.app/?itemID=${itemID}`;
+        
+        if (globalId) {
+            desktopURL += `&globalId=${globalId}`;
+            webURL += `&globalId=${globalId}`;
+        } else if (objectId) {
+            desktopURL += `&objectId=${objectId}`;
+            webURL += `&objectId=${objectId}`;
+        }
+        
+        function openDesktop() {
+            window.location.href = desktopURL;
+        }
+        
+        function openWeb() {
+            window.location.href = webURL;
+        }
+        
+        // Auto-attempt desktop app after 1 second (optional)
+        // Uncomment the next line if you want automatic redirect
+        // setTimeout(() => { openDesktop(); }, 1000);
+    </script>
+</body>
+</html>
+```
+
+## How to Use This:
+
+1. **Save this as `survey123-redirect.html`**
+
+2. **Host it somewhere accessible:**
+   - Your organization's web server
+   - ArcGIS Online (upload as a resource)
+   - GitHub Pages (free and easy)
+
+3. **In Experience Builder**, set your button URL to:
+```
+   https://yourserver.com/survey123-redirect.html?globalId={globalId}
